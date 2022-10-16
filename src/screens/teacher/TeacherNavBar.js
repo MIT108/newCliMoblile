@@ -38,7 +38,7 @@ function TeacherNavBar({ state, descriptors, navigation }) {
 
         const ImageIcon = (route) => {
           switch (route.name) {
-            case AppRoutes.TeacherHomeScreen:
+            case AppRoutes.HomeStack:
               return !isFocused ? <Image style={styles.image} source={Icons.home} /> : <Image style={styles.image} source={Icons.homeActive} />;
             case AppRoutes.DiscussionStack:
               return !isFocused ? <Image style={styles.image} source={Icons.messages} /> : <Image style={styles.image} source={Icons.messageActive} />;

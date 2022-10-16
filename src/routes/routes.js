@@ -27,6 +27,7 @@ import CameraScreen from "../screens/common/CameraScreen";
 import ConversationsScreen from "../screens/common/ConversationsScreen";
 import MessagesScreen from "../screens/common/MessagesScreen";
 import OnCallScreen from "../screens/common/OnCallScreen";
+import ListSubjectScreen from "../screens/common/ListSubjectScreen"
 
 
 //teachers import 
@@ -87,7 +88,7 @@ function AuthStack() {
         screenOptions={{ headerShown: false, gestureEnabled: false }}
         tabBar={(props) => <TeacherNavBar {...props} />}
       >
-        <Tab.Screen name={AppRoutes.TeacherHomeScreen} component={TeacherHomeScreen} />
+        <Tab.Screen name={AppRoutes.HomeStack} component={HomeStack} />
         <Tab.Screen name={AppRoutes.DiscussionStack} component={DiscussionStack} />
         <Tab.Screen name={AppRoutes.ProfileScreen} component={ProfileScreen} />
       </Tab.Navigator>
@@ -147,10 +148,21 @@ function DiscussionStack() {
       screenOptions={{ headerShown: false, gestureEnabled: true }}
       initialRouteName={ChatStack}>
         <Stack.Screen name={AppRoutes.ChatStack} component={ChatStack} />
-        <Stack.Screen name={AppRoutes.MessageScreen} component={MessagesScreen} />
+        <Stack.Screen name={AppRoutes.ListSubjectScreen} component={MessagesScreen} />
     </Stack.Navigator>
   )
-  
+
+}
+
+function HomeStack() {
+  return (
+    
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, gestureEnabled: true }}
+      initialRouteName={ChatStack}>
+        <Stack.Screen name={AppRoutes.ListSubjectScreen} component={ListSubjectScreen} />
+    </Stack.Navigator>
+  )
 }
 
 
