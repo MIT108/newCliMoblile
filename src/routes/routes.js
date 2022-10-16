@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable quotes */
+/* eslint-disable react/react-in-jsx-scope */
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -12,12 +14,34 @@ import SlideScreen from '../screens/Authentication/SlideScreen'
 import VerificationScreen from '../screens/Authentication/VerificationScreen'
 import ListAccountScreen from '../screens/Authentication/ListAccountScreen'
 import PostScreen from "../screens/common/PostScreen";
-import TeacherNavBar from "../screens/teacher/TeacherNavBar";
 import ProfileScreen from "../screens/common/ProfileScreen";
+import {
+  createMaterialTopTabNavigator
+} from "@react-navigation/material-top-tabs";
+
+
+//common imports  
+import CallsScreen from "../screens/common/CallsScreen";
+import StoriesScreen from "../screens/common/StoriesScreen";
+import CameraScreen from "../screens/common/CameraScreen";
+import ConversationsScreen from "../screens/common/ConversationsScreen";
+import MessagesScreen from "../screens/common/MessagesScreen";
+import OnCallScreen from "../screens/common/OnCallScreen";
+
+
+//teachers import 
+import TeacherNavBar from "../screens/teacher/TeacherNavBar";
+import TeacherHomeScreen from "../screens/teacher/TeacherHomeScreen";
+import ChatTabBar from "../screens/common/ChatTabBar";
+import { Colors } from "../components";
+
+
 
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
+
 
 
 function AuthStack() {
@@ -63,7 +87,8 @@ function AuthStack() {
         screenOptions={{ headerShown: false, gestureEnabled: false }}
         tabBar={(props) => <TeacherNavBar {...props} />}
       >
-        <Tab.Screen name={AppRoutes.PostScreen} component={PostScreen} />
+        <Tab.Screen name={AppRoutes.TeacherHomeScreen} component={TeacherHomeScreen} />
+        <Tab.Screen name={AppRoutes.DiscussionStack} component={DiscussionStack} />
         <Tab.Screen name={AppRoutes.ProfileScreen} component={ProfileScreen} />
       </Tab.Navigator>
     );
@@ -83,9 +108,49 @@ function RootStack({ userType }) {
                 <>
                 <Stack.Screen name={AppRoutes.TeacherStack} component={TeacherStack} />
                 </>
-            )}
+        )}
+                <Stack.Screen name={AppRoutes.OnCallScreen} component={OnCallScreen} />
+        
         </Stack.Navigator>
     )
+}
+
+
+function ChatStack(){
+  return (
+    <TopTab.Navigator
+      initialRouteName="Conversations"
+      tabBar={(props) => <ChatTabBar {...props} />}
+      style={{
+        backgroundColor: Colors.PrimaryColorOne,
+      }}
+    >
+      <TopTab.Screen name="Camera" component={CameraScreen} />
+      <TopTab.Screen
+        name="Conversations"
+        component={ConversationsScreen}
+        options={{
+          tabBarLabel: "Disc.",
+        }}
+      />
+      <TopTab.Screen name="Stories" component={StoriesScreen} />
+      <TopTab.Screen name="Calls" component={CallsScreen} />
+    </TopTab.Navigator>
+  );
+};
+
+
+function DiscussionStack() {
+  return (
+    
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, gestureEnabled: true }}
+      initialRouteName={ChatStack}>
+        <Stack.Screen name={AppRoutes.ChatStack} component={ChatStack} />
+        <Stack.Screen name={AppRoutes.MessageScreen} component={MessagesScreen} />
+    </Stack.Navigator>
+  )
+  
 }
 
 

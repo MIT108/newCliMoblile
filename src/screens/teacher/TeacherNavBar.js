@@ -2,7 +2,7 @@
 import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import AppRoutes from "../../routes/routeNames";
 import {Colors} from "../../components/sharedComponents";
-import Icons from "../../components/sharedComponents/icons/icons";
+import Icons from "../../components/icons";
 
 function TeacherNavBar({ state, descriptors, navigation }) {
   return (
@@ -38,20 +38,12 @@ function TeacherNavBar({ state, descriptors, navigation }) {
 
         const ImageIcon = (route) => {
           switch (route.name) {
-            case AppRoutes.PostScreen:
-              return !isFocused ? <Image style={styles.image} source={Icons.postOnActive} /> : <Image style={styles.image} source={Icons.postActive} />;
+            case AppRoutes.TeacherHomeScreen:
+              return !isFocused ? <Image style={styles.image} source={Icons.home} /> : <Image style={styles.image} source={Icons.homeActive} />;
+            case AppRoutes.DiscussionStack:
+              return !isFocused ? <Image style={styles.image} source={Icons.messages} /> : <Image style={styles.image} source={Icons.messageActive} />;
             case AppRoutes.ProfileScreen:
               return !isFocused ? <Image style={styles.image} source={Icons.userOnActive} /> : <Image style={styles.image} source={Icons.userActive} />;
-            {/* case AppRoutes.Tracking:
-              return !isFocused ? <Icons.Messages /> : <RedMessageIcon />;
-            case AppRoutes.Cart:
-              return !isFocused ? (
-                <Icons.ShoppingCart />
-              ) : (
-                <Icons.ShoppingCartRed />
-              );
-            case AppRoutes.Profile:
-              return !isFocused ? <Icons.User /> : <Icons.UserRed />; */}
             default:
               break;
           }

@@ -11,14 +11,7 @@ const PostScreen = () => {
   return (
     <View style={styles.center}>
       <View style={{ width: '100%', height: '100%' }}>
-        {/* <WebView 
-          source = {
-            {
-              uri: VIDEO
-            }
-          }
-          onLoad={console.log('Loaded!')}
-        /> */}
+        <Text>Post Screen</Text>
       </View>
     </View>
   );
