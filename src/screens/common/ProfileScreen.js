@@ -1,11 +1,19 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import { View, Text } from 'react-native'
+import PropTypes from 'prop-types'
 
-export default function ProfileScreen() {
-    return (
-        <View>
-            <Text>Hello</Text>
-        </View>
-    )
+import contactData from '../../components/data/contact.json'
+
+import Profile from '../../components/screens/profile/Profile'
+
+const ProfileScreen = () => <Profile {...contactData} />
+
+ProfileScreen.navigationOptions = () => ({
+  header: null,
+})
+
+ProfileScreen.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
+
+export default ProfileScreen
