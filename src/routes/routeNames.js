@@ -8,6 +8,7 @@ export default AppRoutes = {
     ChatStack: "ChatStack",
     DiscussionStack: "DiscussionStack",
     HomeStack: "HomeStack",
+    SubjectStack: "SubjectStack",
 
     //authentication screens
     ChangePasswordScreen: "ChangePasswordScreen",
@@ -24,6 +25,7 @@ export default AppRoutes = {
     ConversationsScreen: "ConversationsScreen",
     OnCallScreen: "OnCallScreen",
     ListSubjectScreen: "ListSubjectScreen",
+    GroupChatScreen: "GroupChatScreen",
 
     //teacher screens
     TeacherHomeScreen: "TeacherHomeScreen",

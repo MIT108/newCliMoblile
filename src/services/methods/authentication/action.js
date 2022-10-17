@@ -1,23 +1,25 @@
+/* eslint-disable prettier/prettier */
 import axiosInstance from "../../axios/axiosInterceptor";
-import {setVariable} from '../../AsyncStorageMethods'
+import { setVariable } from '../../AsyncStorageMethods'
 
-export const loginAction = async (postData) => {
+export async function loginAction(postData) {
     try {
         var data = postData
+        console.log("data", data);
         let response = await axiosInstance.post('auth/login', data);
         
         const userInfo = response.data.data
         setVariable(userInfo, "misceoUserInformation")
         const userToken = response.data.token
         setVariable(userToken, "misceoUserToken")
-            return response;
+        return response;
     } catch (error) {
         
         if (error.response.status == 423 || error.response.status == 424) {
             const userInfo = error.response.data.data
+            console.log(userInfo)
             setVariable(userInfo, "misceoUserInformation")
         } 
-        console.log(error.response.data)
 
         throw error
     }

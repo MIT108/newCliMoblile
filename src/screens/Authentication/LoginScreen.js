@@ -4,32 +4,45 @@ import React, { useState } from 'react'
 import { AuthenticationHeader, IconButton, Colors, PrimaryButton , PrimaryInput } from '../../components'
 import Toast from 'react-native-toast-message'
 const VectorImage = require('../../assets/images/OTP.png')
-import {loginAction} from '../../services/methods/authentication/action'
+import  {loginAction}  from '../../services/methods/authentication/action'
+import AppRoutes from '../../routes/routeNames'
+import Loader from '../../components/Loader'
 
-function LoginScreen({navigation}) {
-    return (
-        <View style={styles.androidSafeArea}>
-            <View  style={{ zIndex: 1000 }}>
-                <Toast />
+function LoginScreen({ navigation }) {
+    const [loading, setLoading] = useState(false)
+    if (!loading) {
+        return (
+            <View style={styles.androidSafeArea}>
+                <View  style={{ zIndex: 1000 }}>
+                    <Toast />
+                </View>
+
+                <ScrollView style={styles.container}>
+                    <View>
+                        <AuthenticationHeader text="Login." />
+                    </View>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 300 }}>
+                        <Image source={VectorImage} />
+                    </View>
+                    <View>
+                        <LoginFrom navigation={navigation} setLoading={setLoading} />
+                    </View>
+                </ScrollView>
             </View>
-
-            <ScrollView style={styles.container}>
-                <View>
-                    <AuthenticationHeader text="Login." />
-                </View>
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 300 }}>
-                    <Image source={VectorImage} />
-                </View>
-                <View>
-                    <LoginFrom navigation={navigation} />
-                </View>
-            </ScrollView>
-        </View>
+            
+            )
         
-    )
+    } else {
+        return (
+        <Loader loading={loading} />
+        )
+    }
 }
 
-const LoginFrom = ({navigation}) => {
+const LoginFrom = ({
+        navigation,
+        setLoading
+    }) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const EmailIcon = "https://img.icons8.com/material-rounded/100/000000/new-post.png"
@@ -43,43 +56,45 @@ const LoginFrom = ({navigation}) => {
     }
 
     const login = () => {
+        setLoading(true)
+
+
         if (checkValidEmail(email) && password.length > 7) {
             const postData = {
                 'email': email,
                 'password': password
             }
-            // setPassword("")
-
-
             loginAction(postData).then((response) => {
-                Toast.show({
-                    type: 'success',
-                    text1: response.data.data.message,
-                  });
-                  navigation.push("NavigationStack")
+                if (response.status == 200) {
+                    navigation.push(AppRoutes.TeacherStack)
+                }
             }).catch((error) => {
+                console.log('tag', error.response.data)
                 if (error.response.status == 423) {
-                    navigation.push("VerificationScreen")
-                } else if (error.response.status == 424){
-                    
-                }else{
+                    navigation.push(AppRoutes.VerificationScreen)
+                } else if (error.response.status == 424) {
+                    navigation.push(AppRoutes.ChangePasswordScreen)
+                } else {
                     Toast.show({
                         type: 'error',
-                        text1: 'Error',
-                        text2: error.response.data.message,
-                      });
-
+                        text1: 'Validation Error',
+                        text2: error.response.data.message
+                    });
+                    setLoading(false)
                 }
-            })
-            
+            }).finally(() => {
+                setLoading(false)
+            });
+
         } else {
             Toast.show({
                 type: 'error',
                 text1: 'Validation Error',
                 text2: 'Enter Valid credentials'
               });
-            
+            setLoading(false)
         }
+        setLoading(false)
     }
     return (
         <View style={{ marginVertical: 50 }}>

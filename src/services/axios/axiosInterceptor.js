@@ -1,11 +1,14 @@
+/* eslint-disable prettier/prettier */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://172.105.149.21/api/v1",
+    baseURL: "http://192.168.137.1:8000/api/v1",
     headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data"
+        // Accept: "application/json",
+        // "Content-Type": "multipart/form-data",
+        Accept: 'application/json',
+            'Content-Type': 'application/json'
     }
 });
 

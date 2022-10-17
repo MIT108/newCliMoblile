@@ -28,6 +28,7 @@ import ConversationsScreen from "../screens/common/ConversationsScreen";
 import MessagesScreen from "../screens/common/MessagesScreen";
 import OnCallScreen from "../screens/common/OnCallScreen";
 import ListSubjectScreen from "../screens/common/ListSubjectScreen"
+import VideoConferenceScreen from "../screens/common/VideoConferenceScreen"
 
 
 //teachers import 
@@ -35,6 +36,8 @@ import TeacherNavBar from "../screens/teacher/TeacherNavBar";
 import TeacherHomeScreen from "../screens/teacher/TeacherHomeScreen";
 import ChatTabBar from "../screens/common/ChatTabBar";
 import { Colors } from "../components";
+import SubjectTabBar from "../screens/common/SubjectTabBar";
+import GroupChatScreen from "../screens/common/GroupChatScreen";
 
 
 
@@ -46,6 +49,7 @@ const TopTab = createMaterialTopTabNavigator();
 
 
 function AuthStack() {
+  
     return (
     <Stack.Navigator
         screenOptions={{ headerShown: false, gestureEnabled: true }}
@@ -101,15 +105,16 @@ function RootStack({ userType }) {
             screenOptions={{ headerShown: false, gestureEnabled: true }}
         >
             {/* <Stack.Screen name={AppRoutes.ListAccountScreen} component={ListAccountScreen} /> */}
-            {userType === "student" ? (
-                <>
-                {/* <Stack.Screen name={AppRoutes.StudentStack} component={StudentStack} /> */}
-                </>
-            ) : (
+            {userType === "teacher" ? (
                 <>
                 <Stack.Screen name={AppRoutes.TeacherStack} component={TeacherStack} />
                 </>
-        )}
+            ) : (
+                <>
+                {/* <Stack.Screen name={AppRoutes.StudentStack} component={StudentStack} /> */}
+                {/* <Stack.Screen name={AppRoutes.TeacherStack} component={TeacherStack} /> */}
+                </>
+             )}
                 <Stack.Screen name={AppRoutes.OnCallScreen} component={OnCallScreen} />
         
         </Stack.Navigator>
@@ -160,9 +165,34 @@ function HomeStack() {
     <Stack.Navigator
       screenOptions={{ headerShown: false, gestureEnabled: true }}
       initialRouteName={ChatStack}>
-        <Stack.Screen name={AppRoutes.ListSubjectScreen} component={ListSubjectScreen} />
+      <Stack.Screen name={AppRoutes.ListSubjectScreen} component={ListSubjectScreen} />
+      <Stack.Screen name={AppRoutes.SubjectStack} component={SubjectStack} />
     </Stack.Navigator>
   )
+}
+
+function SubjectStack() {
+  
+  return (
+    <TopTab.Navigator
+      initialRouteName="Conversations"
+      tabBar={(props) => <SubjectTabBar {...props} />}
+      style={{
+        backgroundColor: Colors.PrimaryColorOne,
+      }}
+    >
+      <TopTab.Screen name="Camera" component={CameraScreen} />
+      <TopTab.Screen
+        name="Conversations"
+        component={GroupChatScreen}
+        options={{
+          tabBarLabel: "Group",
+        }}
+      />
+      <TopTab.Screen name="Video" component={VideoConferenceScreen} />
+      <TopTab.Screen name="Exam" component={CallsScreen} />
+    </TopTab.Navigator>
+  );
 }
 
 
